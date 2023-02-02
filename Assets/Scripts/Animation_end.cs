@@ -12,11 +12,4 @@ public class Animation_end : MonoBehaviour
     {
         Destroy(gameObject, this.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).length + delay); 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 }
