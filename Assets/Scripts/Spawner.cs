@@ -1,4 +1,7 @@
+using System;
 using System.Collections;
+using System.Reflection;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -7,8 +10,10 @@ public class Spawner : MonoBehaviour
 
     private GameObject spawnedMonsters;
 
-    private int randomIndex;
+    //private int randomIndex;
     private int randomSide;
+
+    private int monsterIndex;
 
     public static readonly int toSpawnBase = 3;
     public static int toSpawn;
@@ -30,6 +35,7 @@ public class Spawner : MonoBehaviour
         leftToSpawn = toSpawn;
         Progression.wave++;
         StartCoroutine(SpawnMonsters());
+
     }
 
     IEnumerator SpawnMonsters()
@@ -37,12 +43,17 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i <= toSpawn; i++)
         {
 
-            yield return new WaitForSeconds(Random.Range(1f, 3f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
 
-            randomIndex = Random.Range(0, monsterReference.Length);
-            randomSide = Random.Range(0, 2);
+            if (Progression.wave < 10)
+                monsterIndex = UnityEngine.Random.Range(0, Progression.wave / 2);
+            else
+                monsterIndex = UnityEngine.Random.Range(0, monsterReference.Length);
 
-            spawnedMonsters = Instantiate(monsterReference[randomIndex]);
+            //randomIndex = Random.Range(0, monsterReference.Length);
+            randomSide = UnityEngine.Random.Range(0, 2);
+
+            spawnedMonsters = Instantiate(monsterReference[monsterIndex]);
 
             if (randomSide == 0) //left side
             {

@@ -1,15 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class Enemy : MonoBehaviour
 {
 
     [HideInInspector] public float speed = 5f;
-     public static float health = 100f;
-     public static int damage = 10;
+    public readonly static int baseHealth = 100;
+    public readonly static int baseDamage = 10;
+    private static int health;
+    private static int damage;
+
+    public static int Health
+    {
+        get
+        {
+            return health;
+        }
+        set 
+        { 
+            Health = Progression.HealthModifier(); 
+        }
+    }
+
+    public static int Damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            Damage = Progression.DamageModifier();
+        }
+    }
 
     public GameObject Enemy_death;
 
@@ -17,6 +39,10 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         EnemyBody = GetComponent<Rigidbody2D>();
+    }
+
+    public Enemy()
+    {
     }
 
     void FixedUpdate()
@@ -32,7 +58,6 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject); //object destroyed
             Instantiate(Enemy_death, transform.position, transform.rotation); //death animation
-            Progression.score++;
         }
     }
 
@@ -40,13 +65,15 @@ public class Enemy : MonoBehaviour
     {
         
         if (hitTrigger.TryGetComponent<Computador>(out var console))
-        {
             console.TakeDamage(damage);
-        }
 
-        Spawner.onScene--;
-        Spawner.leftToSpawn--;
         Destroy(gameObject); //object destroyed
     }
 
+    private void OnDestroy()
+    {
+        Spawner.onScene--;
+        Spawner.leftToSpawn--;
+        Progression.score++;
+    }
 }

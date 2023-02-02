@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Progression : MonoBehaviour
@@ -22,7 +23,7 @@ public class Progression : MonoBehaviour
     {
         ScoreCounter.text = "Score: " + score;
     }
-
+    
     public static int Roll()
     {
         if (score == 0)
@@ -33,5 +34,21 @@ public class Progression : MonoBehaviour
             return (int)(Spawner.toSpawnBase + (Random.Range(3, 5) * score * 0.25f));
         else
             return (int)(Spawner.toSpawnBase + (Random.Range(4, 7) * score * 0.3f));
+    }
+
+    public static int HealthModifier()
+    {
+        if (score == 0)
+            return Enemy.Health = Enemy.baseHealth;
+        else
+            return Enemy.Health =  (int)(Enemy.baseHealth + (Random.Range(1, 2) * score * 0.05f));
+    }
+
+    public static int DamageModifier()
+    {
+        if (score == 0)
+            return Enemy.Damage = Enemy.baseDamage;
+        else
+            return Enemy.Health = (int)(Enemy.baseDamage + (Random.Range(1, 2) * score * 0.05f));
     }
 }
