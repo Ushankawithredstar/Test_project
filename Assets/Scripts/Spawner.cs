@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
 
     IEnumerator SpawnMonsters()
     {
-        for (int i = 0; i == toSpawn; i++)
+        for (int i = 0; i <= toSpawn; i++)
         {
 
             yield return new WaitForSeconds(Random.Range(1f, 3f));
@@ -63,10 +63,7 @@ public class Spawner : MonoBehaviour
             if (i == toSpawn)
             {
                 if (onScene == 0)
-                {
-                        Debug.Log("Ending wave!");
-                        WaveEnd();
-                }
+                    WaveEnd();
             }
         }
     }
