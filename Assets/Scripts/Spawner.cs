@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Reflection;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
@@ -31,18 +32,16 @@ public class Spawner : MonoBehaviour
 
     private void WaveStart()
     {
-        Debug.Log("Wave " + Progression.wave + " starting!");
-        leftToSpawn = toSpawn;
         Progression.wave++;
+        Debug.Log("Wave " + Progression.wave + " starting!"); //add UI element.
+        leftToSpawn = toSpawn;
         StartCoroutine(SpawnMonsters());
-
     }
 
     IEnumerator SpawnMonsters()
     {
-        for (int i = 0; i <= toSpawn; i++)
+        for (int i = 1; i <= toSpawn; i++)
         {
-
             yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
 
             if (Progression.wave < 10)
@@ -59,7 +58,6 @@ public class Spawner : MonoBehaviour
             {
                 spawnedMonsters.transform.position = leftPos.position;
                 spawnedMonsters.GetComponent<Enemy>().speed = 3f;
-                //note: I don't understand how any of this works, it's just copy-pasted.
                 onScene++;
 
                 spawnedMonsters.transform.Rotate(0f, 180f, 0f);
@@ -73,23 +71,27 @@ public class Spawner : MonoBehaviour
 
             if (i == toSpawn)
             {
-                if (onScene == 0)
-                    WaveEnd();
+                Debug.Log("i == toSpawn");
+                WaveEnd();
             }
         }
     }
 
     private void WaveEnd()
     {
-        StopCoroutine(SpawnMonsters());
-        Debug.Log("The wave is over.");
-        StartCoroutine(WaitForWave());
+        if (onScene == 0)
+        {
+            Debug.Log("Don't worry, be happy.");
+            StopCoroutine(SpawnMonsters());
+            Debug.Log("The wave is over.");
+            StartCoroutine(WaitForWave());
+        }
     }
 
     IEnumerator WaitForWave()
     {
         Debug.Log("Waiting...");
-        yield return new WaitForSeconds(25f);
+        yield return new WaitForSeconds(15f);
         toSpawn = Progression.Roll();
         Debug.Log("Spawning " + toSpawn);
         WaveStart();
@@ -97,10 +99,9 @@ public class Spawner : MonoBehaviour
 
     IEnumerator FirstWaitForWave()
     {
-        toSpawn = 3;
-        Progression.wave++;
-        Debug.Log("Starting the first wave. Kill all monsters! Spawning " + toSpawn + " creatures.");
-        yield return new WaitForSeconds(15f);
+        toSpawn = toSpawnBase;
+        Debug.Log("Starting the first wave. Kill all monsters! Spawning " + toSpawn + " creatures."); //add UI element.
+        yield return new WaitForSeconds(4f);
         WaveStart();
     }
 }

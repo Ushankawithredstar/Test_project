@@ -75,6 +75,7 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         Spawner.onScene--;
+        Debug.Log("onScene value is " + Spawner.onScene);
         Spawner.leftToSpawn--;
         Progression.score++;
     }
