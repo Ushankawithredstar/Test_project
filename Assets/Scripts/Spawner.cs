@@ -44,7 +44,6 @@ public class Spawner : MonoBehaviour
         if (EndWave == true)
         {
             WaveEnd();
-            EndWave = false;
         }
     }
 
@@ -96,6 +95,7 @@ public class Spawner : MonoBehaviour
         Debug.Log("The wave is over.");
         StartCoroutine(WaitForWave());
         Enemy.killed = 0;
+        EndWave = false;
     }
 
     IEnumerator WaitForWave()
