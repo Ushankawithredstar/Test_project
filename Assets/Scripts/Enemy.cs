@@ -4,10 +4,12 @@ public class Enemy : MonoBehaviour
 {
 
     [HideInInspector] public float speed = 5f;
+
     public readonly static int baseHealth = 100;
     public readonly static int baseDamage = 10;
-    private static int health;
-    private static int damage;
+
+    private static int health = Health;
+    private static int damage = Damage;
 
     public static int Health
     {
