@@ -13,6 +13,6 @@ public class DebugStuff : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CreaturesCounter.text = Spawner.onScene + " creatures on scene.\n" + Spawner.toSpawn + " to spawn.";
+        CreaturesCounter.text = Spawner.SetOnScene + " creatures on scene.\n" + Spawner.toSpawn + " to spawn.";
     }
 }

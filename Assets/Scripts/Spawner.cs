@@ -19,7 +19,15 @@ public class Spawner : MonoBehaviour
     public static readonly int toSpawnBase = 3;
     public static int toSpawn;
 
-    public static int onScene;
+    private static int onScene = 0;
+
+    public static int SetOnScene
+    {
+        get { return onScene; }
+        set { onScene = value; }
+    }
+
+    public static bool EndWave = false;
 
     public static int leftToSpawn;
 
@@ -27,7 +35,16 @@ public class Spawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Enemy.killed = 0;
         StartCoroutine(FirstWaitForWave());
+    }
+
+    private void Update()
+    {
+        if (EndWave == true)
+        {
+            WaveEnd();
+        }
     }
 
     private void WaveStart()
@@ -58,8 +75,7 @@ public class Spawner : MonoBehaviour
             {
                 spawnedMonsters.transform.position = leftPos.position;
                 spawnedMonsters.GetComponent<Enemy>().speed = 3f;
-                onScene++;
-                Debug.Log("onScene value is " + Spawner.onScene);
+                SetOnScene++;
 
                 spawnedMonsters.transform.Rotate(0f, 180f, 0f);
             }
@@ -67,27 +83,18 @@ public class Spawner : MonoBehaviour
             {
                 spawnedMonsters.transform.position = rightPos.position;
                 spawnedMonsters.GetComponent<Enemy>().speed = -3f;
-                onScene++;
-                Debug.Log("onScene value is " + Spawner.onScene);
-            }
-
-            if (i == toSpawn)
-            {
-                Debug.Log("i == toSpawn");
-                WaveEnd();
+                SetOnScene++;
             }
         }
     }
 
     private void WaveEnd()
     {
-        if (onScene == 0)
-        {
-            Debug.Log("Don't worry, be happy.");
-            StopCoroutine(SpawnMonsters());
-            Debug.Log("The wave is over.");
-            StartCoroutine(WaitForWave());
-        }
+        Debug.Log("Don't worry, be happy.");
+        StopCoroutine(SpawnMonsters());
+        Debug.Log("The wave is over.");
+        StartCoroutine(WaitForWave());
+        Enemy.killed = 0;
     }
 
     IEnumerator WaitForWave()

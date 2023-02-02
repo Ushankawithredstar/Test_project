@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +14,6 @@ public class WaveCounter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        WaveCounterText.text = "Wave " + Progression.wave + ", Enemies " + Spawner.onScene + "/" + Spawner.leftToSpawn;
+        WaveCounterText.text = "Wave " + Progression.wave + ", Enemies " + Spawner.SetOnScene + "/" + Spawner.leftToSpawn;
     }
 }

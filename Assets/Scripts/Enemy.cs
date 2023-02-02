@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private static int health = Health;
     private static int damage = Damage;
 
+    public static int killed;
+
     public static int Health
     {
         get
@@ -74,9 +76,16 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        Spawner.onScene--;
-        Debug.Log("onScene value is " + Spawner.onScene);
+        Spawner.SetOnScene--;
         Spawner.leftToSpawn--;
         Progression.score++;
+        killed++;
+        Debug.Log("killed " + killed);
+
+        if (killed == Spawner.toSpawn)
+        {
+            Spawner.EndWave = true;
+            Debug.Log("EndWave has been set to true.");
+        }
     }
 }
