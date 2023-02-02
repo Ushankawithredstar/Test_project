@@ -59,6 +59,7 @@ public class Spawner : MonoBehaviour
                 spawnedMonsters.transform.position = leftPos.position;
                 spawnedMonsters.GetComponent<Enemy>().speed = 3f;
                 onScene++;
+                Debug.Log("onScene value is " + Spawner.onScene);
 
                 spawnedMonsters.transform.Rotate(0f, 180f, 0f);
             }
@@ -67,6 +68,7 @@ public class Spawner : MonoBehaviour
                 spawnedMonsters.transform.position = rightPos.position;
                 spawnedMonsters.GetComponent<Enemy>().speed = -3f;
                 onScene++;
+                Debug.Log("onScene value is " + Spawner.onScene);
             }
 
             if (i == toSpawn)
