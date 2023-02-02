@@ -44,6 +44,7 @@ public class Spawner : MonoBehaviour
         if (EndWave == true)
         {
             WaveEnd();
+            EndWave = false;
         }
     }
 
