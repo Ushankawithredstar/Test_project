@@ -83,9 +83,6 @@ public class Enemy : MonoBehaviour
         Debug.Log("killed " + killed);
 
         if (killed == Spawner.toSpawn)
-        {
             Spawner.EndWave = true;
-            Debug.Log("EndWave has been set to true.");
-        }
     }
 }

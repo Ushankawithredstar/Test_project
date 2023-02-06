@@ -39,14 +39,6 @@ public class Spawner : MonoBehaviour
         StartCoroutine(FirstWaitForWave());
     }
 
-    private void Update()
-    {
-        if (EndWave == true)
-        {
-            WaveEnd();
-        }
-    }
-
     private void WaveStart()
     {
         Progression.wave++;
@@ -85,6 +77,12 @@ public class Spawner : MonoBehaviour
                 spawnedMonsters.GetComponent<Enemy>().speed = -3f;
                 SetOnScene++;
             }
+
+            if (EndWave == true)
+            {
+                WaveEnd();
+                EndWave = false;
+            }
         }
     }
 
@@ -95,7 +93,6 @@ public class Spawner : MonoBehaviour
         Debug.Log("The wave is over.");
         StartCoroutine(WaitForWave());
         Enemy.killed = 0;
-        EndWave = false;
     }
 
     IEnumerator WaitForWave()
