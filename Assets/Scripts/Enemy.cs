@@ -15,26 +15,14 @@ public class Enemy : MonoBehaviour
 
     public static int Health
     {
-        get
-        {
-            return health;
-        }
-        set 
-        { 
-            Health = Progression.HealthModifier(); 
-        }
+        get { return health; }
+        set { Health = Progression.HealthModifier(); }
     }
 
     public static int Damage
     {
-        get
-        {
-            return damage;
-        }
-        set
-        {
-            Damage = Progression.DamageModifier();
-        }
+        get { return damage; }
+        set { Damage = Progression.DamageModifier(); }
     }
 
     public GameObject Enemy_death;

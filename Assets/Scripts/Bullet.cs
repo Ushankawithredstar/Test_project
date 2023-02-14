@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour
 
     public static Collider2D collision;
 
+    public static string bullet = "Bullet";
+
     // Start is called before the first frame update
     void Start()
     {
