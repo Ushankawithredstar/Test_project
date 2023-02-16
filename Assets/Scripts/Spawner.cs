@@ -23,7 +23,8 @@ public class Spawner : MonoBehaviour
         set { onScene = value; }
     }
 
-    public static bool EndWave = false;
+    //if true, wave ends.
+    private bool EndWave = Enemy.killed == toSpawn;
 
     public static int leftToSpawn;
 
@@ -34,7 +35,14 @@ public class Spawner : MonoBehaviour
         Enemy.killed = 0;
         StartCoroutine(FirstWaitForWave());
     }
-
+    private void Update()
+    {
+        if (EndWave == true)
+        {
+            Enemy.killed = 0;
+            WaveEnd();
+        }
+    }
     private void WaveStart()
     {
         Progression.wave++;
@@ -73,12 +81,6 @@ public class Spawner : MonoBehaviour
                 spawnedMonsters.GetComponent<Enemy>().speed = -3f;
                 SetOnScene++;
             }
-
-            if (EndWave == true)
-            {
-                WaveEnd();
-                EndWave = false;
-            }
         }
     }
 
@@ -88,7 +90,6 @@ public class Spawner : MonoBehaviour
         StopCoroutine(SpawnMonsters());
         Debug.Log("The wave is over.");
         StartCoroutine(WaitForWave());
-        Enemy.killed = 0;
     }
 
     IEnumerator WaitForWave()

@@ -33,10 +33,6 @@ public class Enemy : MonoBehaviour
         EnemyBody = GetComponent<Rigidbody2D>();
     }
 
-    public Enemy()
-    {
-    }
-
     void FixedUpdate()
     {
         EnemyBody.velocity = new Vector2(speed, EnemyBody.velocity.y);
@@ -69,8 +65,5 @@ public class Enemy : MonoBehaviour
         Progression.score++;
         killed++;
         Debug.Log("killed " + killed);
-
-        if (killed == Spawner.toSpawn)
-            Spawner.EndWave = true;
     }
 }

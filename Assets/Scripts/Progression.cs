@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class Progression : MonoBehaviour
@@ -12,13 +11,12 @@ public class Progression : MonoBehaviour
     public static int rollResult;
 
     public Text ScoreCounter;
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         ScoreCounter = GetComponent<Text>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         ScoreCounter.text = "Score: " + score;
