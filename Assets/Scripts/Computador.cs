@@ -8,18 +8,6 @@ public class Computador : MonoBehaviour
     public static bool hitConsole = true;
     public static string console = "Console";
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void TakeDamage(int damage)
     {
         consoleHealth -= damage;

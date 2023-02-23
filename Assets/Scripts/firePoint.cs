@@ -1,10 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class firePoint : MonoBehaviour
+public class FirePoint : MonoBehaviour
 {
-    public Transform FirePoint;
-    public GameObject BulletPrefab;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject bulletPrefab;
 
     private bool onCooldown = false;
 
@@ -12,21 +12,18 @@ public class firePoint : MonoBehaviour
     void Update()
     {
         if (Input.GetButtonDown("Fire1") && onCooldown == false)
-        {
             Shoot();
-            onCooldown = true;
-            StartCoroutine(ShootCooldown(1f));
-        }
-    }
-
-    IEnumerator ShootCooldown(float time)
-    {
-        yield return new WaitForSeconds(time);
-        onCooldown = false;
     }
 
     private void Shoot()
     {
-        Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation);
+        Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        onCooldown = true;
+        Invoke(nameof(ShootCD), 1f);
+    }
+
+    private void ShootCD()
+    {
+        onCooldown = false;
     }
 }

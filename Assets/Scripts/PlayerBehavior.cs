@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerBehavior : MonoBehaviour
 {
@@ -15,15 +11,14 @@ public class PlayerBehavior : MonoBehaviour
 
     public Rigidbody2D PlayerBody;
 
-    private SpriteRenderer sr;
     private float movementX;
 
     private bool grounded = true;
 
-    private string ground = "Ground";
+    private readonly string _ground = "Ground";
 
     private Animator anim;
-    private string WALK_ANIMATION = "Walk";
+    private readonly string WALK_ANIMATION = "Walk";
 
     private bool facingLeft = false;
 
@@ -31,8 +26,6 @@ public class PlayerBehavior : MonoBehaviour
     {
         PlayerBody.GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
-        sr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -47,7 +40,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         movementX = Input.GetAxisRaw("Horizontal");
 
-        transform.position += new Vector3(movementX, 0f, 0f) * Time.deltaTime * moveForce;
+        transform.position += moveForce * Time.deltaTime * new Vector3(movementX, 0f, 0f);
     }
 
     void PlayerJump()
@@ -62,13 +55,15 @@ public class PlayerBehavior : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag(ground))
+        if (collision.gameObject.CompareTag(_ground))
         {
             grounded = true;
         }
 
     }
 
+
+    //матерь божья.
     void AnimatePlayer()
     {
         if (movementX > 0) //we're going to the left side

@@ -8,22 +8,22 @@ public class Enemy : MonoBehaviour
     public readonly static int baseHealth = 100;
     public readonly static int baseDamage = 10;
 
-    private static int health = Health;
-    private static int damage = Damage;
+    private static int health = baseHealth;
+    private static int damage = baseDamage;
 
-    public static int killed;
+    public static int Killed;
 
-    public static int Health
-    {
-        get { return health; }
-        set { Health = Progression.HealthModifier(); }
-    }
+    //public static int Health
+    //{
+    //    get { return health; }
+    //    set { Health = Progression.HealthModifier(); }
+    //}
 
-    public static int Damage
-    {
-        get { return damage; }
-        set { Damage = Progression.DamageModifier(); }
-    }
+    //public static int Damage
+    //{
+    //    get { return damage; }
+    //    set { Damage = Progression.DamageModifier(); }
+    //}
 
     public GameObject Enemy_death;
 
@@ -44,18 +44,19 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            Destroy(gameObject); //object destroyed
-            Instantiate(Enemy_death, transform.position, transform.rotation); //death animation
+            Destroy(gameObject);
+            Instantiate(Enemy_death, transform.position, transform.rotation);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D hitTrigger)
     {
-        
         if (hitTrigger.TryGetComponent<Computador>(out var console))
+        {
             console.TakeDamage(damage);
-
-        Destroy(gameObject); //object destroyed
+            Destroy(gameObject);
+            Instantiate(Enemy_death, transform.position, transform.rotation);
+        }
     }
 
     private void OnDestroy()
@@ -63,7 +64,7 @@ public class Enemy : MonoBehaviour
         Spawner.SetOnScene--;
         Spawner.leftToSpawn--;
         Progression.score++;
-        killed++;
-        Debug.Log("killed " + killed);
+        Killed++;
+        //Debug.Log("killed " + Killed);
     }
 }

@@ -12,8 +12,8 @@ public class Spawner : MonoBehaviour
 
     private int monsterIndex;
 
-    public static readonly int toSpawnBase = 3;
-    public static int toSpawn;
+    public static readonly int ToSpawnBase = 3;
+    public static int ToSpawn;
 
     private static int onScene = 0;
 
@@ -24,36 +24,39 @@ public class Spawner : MonoBehaviour
     }
 
     //if true, wave ends.
-    private bool EndWave = Enemy.killed == toSpawn;
+    private bool EndWave = Enemy.Killed == ToSpawn;
 
     public static int leftToSpawn;
 
     [SerializeField] private Transform leftPos, rightPos;
+
     // Start is called before the first frame update
     void Start()
     {
-        Enemy.killed = 0;
+        Enemy.Killed = 0;
         StartCoroutine(FirstWaitForWave());
     }
     private void Update()
     {
         if (EndWave == true)
         {
-            Enemy.killed = 0;
+            Enemy.Killed = 0;
             WaveEnd();
         }
     }
+
     private void WaveStart()
     {
         Progression.wave++;
-        Debug.Log("Wave " + Progression.wave + " starting!"); //add UI element.
-        leftToSpawn = toSpawn;
+        //add UI element.
+        Debug.Log("Wave " + Progression.wave + " starting!"); 
+        leftToSpawn = ToSpawn;
         StartCoroutine(SpawnMonsters());
     }
 
     IEnumerator SpawnMonsters()
     {
-        for (int i = 1; i <= toSpawn; i++)
+        for (int i = 1; i <= ToSpawn; i++)
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(1f, 3f));
 
@@ -86,25 +89,25 @@ public class Spawner : MonoBehaviour
 
     private void WaveEnd()
     {
-        Debug.Log("Don't worry, be happy.");
+        //Debug.Log("Don't worry, be happy.");
         StopCoroutine(SpawnMonsters());
-        Debug.Log("The wave is over.");
+        //Debug.Log("The wave is over.");
         StartCoroutine(WaitForWave());
     }
 
     IEnumerator WaitForWave()
     {
-        Debug.Log("Waiting...");
+        //Debug.Log("Waiting...");
         yield return new WaitForSeconds(15f);
-        toSpawn = Progression.Roll();
-        Debug.Log("Spawning " + toSpawn);
+        ToSpawn = Progression.Roll();
+        //Debug.Log("Spawning " + toSpawn);
         WaveStart();
     }
 
     IEnumerator FirstWaitForWave()
     {
-        toSpawn = toSpawnBase;
-        Debug.Log("Starting the first wave. Kill all monsters! Spawning " + toSpawn + " creatures."); //add UI element.
+        ToSpawn = ToSpawnBase;
+        //Debug.Log("Starting the first wave. Kill all monsters! Spawning " + toSpawn + " creatures.");
         yield return new WaitForSeconds(4f);
         WaveStart();
     }

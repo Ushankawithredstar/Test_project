@@ -1,18 +1,17 @@
-using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float speed = 30f;
-    public int damage = 100;
+    private int damage = 100;
 
-    public Rigidbody2D BulletBody;
+    private Rigidbody2D BulletBody;
 
-    public GameObject Hit_Impact;
+    [SerializeField] private GameObject hit_Impact;
 
-    public static Collider2D collision;
+    private Collider2D collision;
 
-    public static string bullet = "Bullet";
+    public string bullet = "Bullet";
 
     // Start is called before the first frame update
     void Start()
@@ -20,26 +19,24 @@ public class Bullet : MonoBehaviour
         BulletBody.GetComponent<Rigidbody2D>();
         BulletBody.velocity = transform.right * speed;
 
-        StartCoroutine(BulletDestroy(0.3f));
+        Invoke(nameof(DestroyBullet), 0.3f);
     }
 
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
         Destroy(gameObject);
 
-        
         if (hitInfo.TryGetComponent<Enemy>(out var enemy))
         {
             enemy.TakeDamage(damage);
         }
 
-        Instantiate(Hit_Impact, transform.position, transform.rotation);
+        Instantiate(hit_Impact, transform.position, transform.rotation);
     }
 
-    IEnumerator BulletDestroy(float time)
+    private void DestroyBullet()
     {
-        yield return new WaitForSeconds(time);
         Destroy(gameObject);
-        Instantiate(Hit_Impact, transform.position, transform.rotation);
+        Instantiate(hit_Impact, transform.position, transform.rotation);
     }
 }
